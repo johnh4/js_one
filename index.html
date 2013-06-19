@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <script></script>
+	</head>
+	<body>
+        <!--Add your own HTML!-->
+        <div id="box"></div>
+        <canvas id="canvas" width="300" height="200"></canvas>
+        
+        <div id="score_box">
+            <div id="score_text">Score: </div>
+            <div id="score">0</div>
+        </div>
+        <div>Time: </div>
+        <div id="timer">0</div>
+        <div id="buttons">
+            <input type="number" id="count" />
+            <br>
+            <input type="button" id="start" value="Start" onclick="start_timer()" />
+            <input type="button" id="stop" value="Stop" onclick="stop_timer()" />
+        </div>
+        
+        <p>num_enemies:</p>
+        <div id="rules">
+            <p>
+                <br>
+                Avoid the small circles <strong>at all costs</strong>. <br>
+                Use <strong>Arrow keys</strong> to move. <br>
+                Press <strong>S</strong> to stop in place. <br>
+                Press the <strong>Space Bar</strong> to pause the game.
+            </p>
+        </div>
+        <p id="test_a">Test</p>
+        <br>
+        <p id="test_b">Test</p>
+        
+	</body>
+    <footer>
+        <script type='text/javascript' src='my_test_game.js'></script>
+    </footer>
+</html>
