@@ -68,3 +68,19 @@ body {
 #start {
     display: block;
 }
+#warning {
+    font-weight: bold;
+    text-align: center;
+    animation: warned 5s infinite;
+}
+@keyframes warned {
+    0% {
+        color: black;
+    }
+    50% {
+        color: #A82525;
+    }
+    100% {
+        color: black;
+    }
+}

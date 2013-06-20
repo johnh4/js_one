@@ -1,15 +1,6 @@
-// Add your JavaScript below!
 var my_canvas = document.getElementById('canvas');
 var context = my_canvas.getContext("2d");
-/*
-context.beginPath();
-context.strokeRect(5,5,190,190);
-context.stroke();
 
-var snake = my_canvas.getContext("2d");
-context.beginPath();
-context.strokeRect(90,90,10,10);
-*/
 var WIDTH = 300;
 var HEIGHT = 200;
 var x = 10;
@@ -20,18 +11,13 @@ var direction= "";
 var r = 10;
 var dr = 2;
 var min_radius= 10;
-//var e_x = 30;
-//var e_y = 30;
-//var e_r = 5;
-//var e_dx = 5;
-//var e_dy = 5;
-//var e_dir;
 var ae_dir = new Array();
 var ae_x = new Array();
 var ae_y = new Array();
 var ae_r = new Array();
 var ae_dx = new Array();
 var ae_dy = new Array();
+var angry = 3;
 var num_enemies = 0;
 var max_enemies = 5;
 var index = 0;
@@ -61,7 +47,7 @@ function init() {
     start_timer();
     draw_interval = setInterval(draw,30);
     //add_carrot();    
-    return draw_interval;       
+    return draw_interval;      
 }
 function add_carrot() {
     /*
@@ -87,6 +73,10 @@ function add_carrot() {
 }
 function start_timer() {
     paused = false;
+    if(game_over) {
+        game_over = false;
+        init();
+    }
     var interval = 1000;
     var count = document.getElementById("count");
     var clock = document.getElementById("timer");
@@ -319,6 +309,8 @@ function move(direction){
             x = WIDTH-r;
         }
     }
+
+    init_dragging();
     //document.getElementById("test_y").innerHTML=y;
     
 }
@@ -364,6 +356,46 @@ function doKeyDown(evt) {
             break;
     }
 }
+function make_them_angry() {
+    for(var i=0; i< num_enemies; i++) {
+        ae_dx[i] = angry;
+        ae_dy[i] = angry;
+    }
+}
+/***** dragging functions *****************/
+var drag_element;
+
+function on_mouse_down(e) {
+    var target = e.target;
+    if(e.button == 0) {
+        direction = "";
+        x = e.clientX;
+        y = e.clientY;
+        max_enemies = 10;
+        make_them_angry();
+    }
+    drag_element = target;
+    my_canvas.onmousemove = on_mouse_move;
+}
+function on_mouse_move(e) {
+    if(e == null) {
+        var e = window.event;
+    }
+        x = e.clientX;
+        y = e.clientY;
+}
+function on_mouse_up(e) {
+    my_canvas.onmousemove = null;
+    if(drag_element != null) {
+        my_canvas.onmousemove = null;
+        drag_element = null;
+    }
+}
+function init_dragging() {
+    my_canvas.onmousedown = on_mouse_down;
+    my_canvas.onmouseup = on_mouse_up;
+}
+/*************************************/
 
 init();
 window.addEventListener('keydown',doKeyDown,true);
