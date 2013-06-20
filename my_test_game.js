@@ -41,8 +41,10 @@ var score = 0;
 var game_over = false;
 
 var timer = null;
+var t_value = 0;
 var start = document.getElementById("start");
 var count = document.getElementById("count");
+var clock = document.getElementById("timer");
 var paused = false;
 var enemy_interval;
 var e_dir_interval;
@@ -50,21 +52,50 @@ var draw_interval;
 
 function init() {
     count.value = 0;
+    clock.innerHTML = 0;
+    document.getElementById("canvas").width = WIDTH;
+    document.getElementById("canvas").height = HEIGHT;
+    document.getElementById("rules").style.width = WIDTH+"px";
     enemy_interval = setInterval(create_enemy, 5000);
     e_dir_interval = setInterval(e_direction, 400);
     start_timer();
     draw_interval = setInterval(draw,30);
+    //add_carrot();    
     return draw_interval;       
 }
-
+function add_carrot() {
+    /*
+    var imageObj = new Image();
+    imageObj.onload = function() {
+        context.drawImage(imageObj, 80, 80);
+    };
+    imageObj.src = 'https://profile-a.xx.fbcdn.net/hprofile-ash4/373313_234468583305435_1710516074_q.jpg';
+    //imageObj.src = "http://www.wpclipart.com/signs_symbol/shapes/diamond_shape.png"
+    */
+    /*
+    var carrot = document.getElementById("carr");
+    imageObj.onload = function() {
+        context.drawImage(carrot, 20,20);
+    };
+    */
+    /*
+    var css_box = document.getElementById('box');
+    css_box.onload = function() {
+        context.drawImage(css_box,60,20);
+    }
+    */
+}
 function start_timer() {
     paused = false;
     var interval = 1000;
     var count = document.getElementById("count");
+    var clock = document.getElementById("timer");
 
     if(timer !== null) return;
     timer = setInterval(function(){
         count.value ++;
+        t_value ++;
+        clock.innerHTML = t_value;
     }, interval);
 }
 
@@ -75,19 +106,21 @@ function stop_timer() {
 }
 
 function create_enemy() {
-    //score += 1000;
-    if(num_enemies < max_enemies) {
-        num_enemies += 1;
-        index = num_enemies-1;
-        ae_dir[index] = ""; 
-        ae_x[index] = 10; 
-        ae_y[index] = 10; 
-        ae_dx[index] = 1;    
-        ae_dy[index] = 1;  
-        ae_r[index] = 5;
-        var rand = Math.floor(Math.random()*colors.length);
-        ae_color[index] = colors[rand]; 
-        document.getElementById("test_a").innerHTML=num_enemies;
+    //score +=  1000;
+    if(!paused) {
+        if(num_enemies < max_enemies) {
+            num_enemies += 1;
+            index = num_enemies-1;
+            ae_dir[index] = ""; 
+            ae_x[index] = 10; 
+            ae_y[index] = 10; 
+            ae_dx[index] = 1;    
+            ae_dy[index] = 1;  
+            ae_r[index] = 5;
+            var rand = Math.floor(Math.random()*colors.length);
+            ae_color[index] = colors[rand]; 
+            document.getElementById("test_a").innerHTML=num_enemies;
+        }
     }
 }   
  
@@ -105,6 +138,11 @@ function draw_enemies() {
 function reset_game() {
     num_enemies = 0;
     score = 0;
+    direction = "";
+    x = 10;
+    y = 10;
+    r= 10;
+    t_value = 0;
     clearInterval(draw_interval);
     clearInterval(e_dir_interval);
     clearInterval(enemy_interval);
@@ -121,7 +159,7 @@ function draw() {
         context.font = "25px Arial";
         context.fillText("GAME OVER", WIDTH*.25, HEIGHT*.8);
         context.font = "12px Arial";
-        context.fillText("Press Space Bar to try again", WIDTH*.25, HEIGHT*.9);
+        context.fillText("Press the Space Bar to try again", WIDTH*.215, HEIGHT*.9);
         reset_game();
         stop_timer();
         return;   
@@ -141,6 +179,7 @@ function draw() {
     draw_enemies();
     //circle(e_x, e_y, e_r);
     check_collision();
+    add_carrot();
 }
 
 function check_collision() {
@@ -313,12 +352,12 @@ function doKeyDown(evt) {
                 start_timer();
             }
             break;
-        case 70: // f was pressed
+        case 70: // f was pressed, grow
             if(2*r < HEIGHT && 2*r <= WIDTH) {
                 r += dr;
             }
             break;
-        case 68: // d was pressed
+        case 68: // d was pressed, shrink
             if(r > min_radius){
                 r -= dr;
             }

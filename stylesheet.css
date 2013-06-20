@@ -6,7 +6,9 @@
     background-color: blue;
     float: right;
 }
-
+body {
+    background: #eee;
+}
 #test {
     float:right;
 }
@@ -14,6 +16,8 @@
 #canvas {
     //display: inline;
     float: left;
+    box-shadow: 0px 0px 2px #888;
+    margin-right: 5px;
 }
 #score_box { 
     //display: inline;  
@@ -23,6 +27,9 @@
 #rules {
     clear: both;
     font-family: "Times New Roman";
+}
+#rules p {
+    text-align: center;
 }
 
 #score p {
@@ -40,4 +47,24 @@
 }
 #score_text {
     float:left;
+    font-weight: bold;
+}
+
+#carr {
+    z-index: -1;
+    display: none;
+}
+
+#timer_label {
+    float: left;
+    font-weight: bold;
+}
+#count {
+    display: none;
+}
+#test_a, #test_b {
+    display: none;
+}
+#start {
+    display: block;
 }
