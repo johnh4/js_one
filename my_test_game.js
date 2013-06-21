@@ -24,6 +24,7 @@ var index = 0;
 var colors = ["blue", "red", "green", "black", "yellow","orange"];
 var ae_color = new Array();
 var score = 0;
+var score_mult = 0;
 var game_over = false;
 
 var timer = null;
@@ -31,6 +32,7 @@ var t_value = 0;
 var start = document.getElementById("start");
 var count = document.getElementById("count");
 var clock = document.getElementById("timer");
+var multiplier = document.getElementById('multiplier');
 var paused = false;
 var enemy_interval;
 var e_dir_interval;
@@ -133,6 +135,7 @@ function reset_game() {
     y = 10;
     r= 10;
     t_value = 0;
+    score_mult = 0;
     clearInterval(draw_interval);
     clearInterval(e_dir_interval);
     clearInterval(enemy_interval);
@@ -154,7 +157,7 @@ function draw() {
         stop_timer();
         return;   
     }
-    score += 1;
+    score += (1 + score_mult);
     document.getElementById('score').innerHTML=score;
     clear();
     context.fillStyle = "white";
@@ -162,6 +165,7 @@ function draw() {
     rect(0,0,WIDTH,HEIGHT);
     context.fillStyle = "purple";
     move(direction);
+    multiplier.innerHTML = score_mult;
     circle(x,y,r);
     //context.fillStyle = "red";
     //e_direction();
@@ -347,11 +351,13 @@ function doKeyDown(evt) {
         case 70: // f was pressed, grow
             if(2*r < HEIGHT && 2*r <= WIDTH) {
                 r += dr;
+                score_mult +=1;
             }
             break;
         case 68: // d was pressed, shrink
             if(r > min_radius){
                 r -= dr;
+                score_mult --;
             }
             break;
     }

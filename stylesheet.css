@@ -55,7 +55,7 @@ body {
     display: none;
 }
 
-#timer_label {
+#timer_label, #multiplier_label {
     float: left;
     font-weight: bold;
 }
