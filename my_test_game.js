@@ -389,19 +389,21 @@ function on_mouse_move(e) {
     }
         x = e.clientX;
         y = e.clientY;
+        my_canvas.style.cursor = "none";
 }
 function on_mouse_up(e) {
     my_canvas.onmousemove = null;
     if(drag_element != null) {
         my_canvas.onmousemove = null;
         drag_element = null;
+        my_canvas.style.cursor = "auto";
     }
 }
 function init_dragging() {
     my_canvas.onmousedown = on_mouse_down;
     my_canvas.onmouseup = on_mouse_up;
 }
-/*************************************/
+/***************************************/
 
 init();
 window.addEventListener('keydown',doKeyDown,true);
